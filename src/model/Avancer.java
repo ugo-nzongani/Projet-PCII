@@ -14,7 +14,7 @@ public class Avancer extends Thread {
 	/**Méthode utilisée pour faire avancer progressivement la ligne brisée*/
 	public void run() {
 		/**Boucle infinie*/
-		while(true) {
+		while(this.etat.running) {
 			/**Traitement du thread*/
 			this.etat.parcours.incrPosition();
 			this.etat.affichage.repaint();

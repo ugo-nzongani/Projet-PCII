@@ -16,9 +16,9 @@ public class Affichage extends JPanel {
 	/**Constantes liées à l'interface graphique*/
 	
 	/**Largeur de la fenêtre*/
-	public final static int LARGEUR_FENETRE = 600;
+	public final static int LARGEUR_FENETRE = 800;
 	/**Hauteur de la fenêtre*/
-	public final static int HAUTEUR_FENETRE = 600;
+	public final static int HAUTEUR_FENETRE = 800;
 	/**Abscisse de l'ovale*/
 	public static final int X = 1;
 	/**Ordonnée de l'ovale*/
@@ -52,8 +52,11 @@ public class Affichage extends JPanel {
 		ArrayList<Point> pointList = this.etat.parcours.getParcours();
 		/**Boucle dessinant la ligne brisée*/
 		for(int i = 0; i < pointList.size(); i++) {
-			Point p = pointList.get(i);
-			g.drawLine(p.x, p.y, p.x, p.y);
+			if(i < pointList.size()-1) {
+				Point p1 = pointList.get(i);
+				Point p2 = pointList.get(i+1);
+				g.drawLine(p1.x, p1.y, p2.x, p2.y);
+			}
 		}
 	}
 }

@@ -26,12 +26,12 @@ public class Main {
 			e.addAffichage(a);
 			Control c = new Control(a, e);
 			createFenetre(j, c);
-			
-			/**Création d'un nouveau thread*/
-			Voler v = new Voler(e);
-			Avancer av = new Avancer(e);
-			/**Lancement du thread*/
-			v.start();
-			av.start();
+
+			/**Création de nouveaux threads*/
+			Voler oval_movement = new Voler(e);
+			Avancer line_movement = new Avancer(e);
+			/**Lancement des threads*/
+			oval_movement.start();
+			line_movement.start();
 		}
 }

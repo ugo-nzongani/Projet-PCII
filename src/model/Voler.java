@@ -14,7 +14,7 @@ public class Voler extends Thread {
 	/**Méthode utilisée pour modifier progressivement la valeur de la hauteur de l'ovale vers le bas*/
 	public void run() {
 		/**Boucle infinie*/
-		while(true) {
+		while(this.etat.running) {
 			/**Traitement du thread*/
 			this.etat.moveDown();
 			this.etat.affichage.repaint();

@@ -1,9 +1,10 @@
 package model;
+import java.awt.Point;
+import javax.swing.JOptionPane;
 import view.Affichage;
 
 /**Classe utilisée pour la représentation du modèle*/
 public class Etat {
-
 	/**Constantes*/
 	
 	/**Valeur de la modification de la hauteur de l'ovale vers le haut*/
@@ -12,6 +13,7 @@ public class Etat {
 	public static final int SAUT_DOWN = 2;
 		
 	/**Attributs*/
+	public boolean running = true;
 	public int hauteur;
 	public int saut;
 	public Affichage affichage;
@@ -36,11 +38,13 @@ public class Etat {
 	
 	/**Méthode utilisée pour modifier la hauteur de l'ovale vers le haut en restant dans le cadre de la fenêtre*/
 	public void jump() {
-		if(this.getHauteur() - this.saut > 0){
+		if(this.getHauteur() - this.saut > 0 && this.running){
 			this.hauteur -= this.saut;
 		} else {
 			/**Si la hauteur dépasse les bornes de la fenêtre, ne rien faire*/
 		}
+		/**On vérifie si la partie est perdue*/
+		this.stopGame();
 	}
 	
 	/**Méthode utilisée pour modifier la hauteur de l'ovale vers le bas en restant dans le cadre de la fenêtre*/
@@ -49,6 +53,33 @@ public class Etat {
 			this.hauteur += SAUT_DOWN;
 		} else {
 			/**Si la hauteur dépasse les bornes de la fenêtre, ne rien faire*/
+		}
+		/**On vérifie si la partie est perdue*/
+		this.stopGame();
+	}
+	
+	/**Méthode utilisée pour vérifier si l'ovale est sorti de la ligne**/
+	public boolean testPerdu() {
+		Point p1 = this.parcours.getParcours().get(0);
+		Point p2 = this.parcours.getParcours().get(1);
+		/**Calcul de la pente*/
+		float pente = (p2.y - p1.y) / (float)(p2.x - p1.x);
+		/**Récupération de l'ordonnée du point prochain point invisible sur la fenêtre*/
+		float y = (p1.y - pente * (p1.x));
+		/**Ordonnée minimale de l'ovale (ordonnée du point le plus haut de l'ovale dans la fenêtre*/
+		int yMin_ovale = this.hauteur;
+		/**Ordonnée maximale de l'ovale (ordonnée du point le plus bas de l'ovale dans la fenêtre*/
+		int yMax_ovale = this.hauteur + Affichage.HAUTEUR_OVALE;
+		/**Récupération de l'ordonnée du point de la ligne correspondant à la position de l'ovale*/
+		float y_shift = y + (pente * (Affichage.X + Affichage.LARGEUR_OVALE/2));
+		return y_shift <= yMin_ovale || y_shift >= yMax_ovale;
+	}
+	
+	/**Méthode utilisée pour stopper le jeu*/
+	public void stopGame() {
+		if(this.testPerdu()){
+			this.running = false;
+			JOptionPane.showMessageDialog(null, "Défaite\n"+"Score: "+this.parcours.getPosition(), "Perdu", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 }
