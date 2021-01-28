@@ -13,8 +13,11 @@ public class Etat {
 	public static final int SAUT_DOWN = 2;
 		
 	/**Attributs*/
+	/**Variable indiquant si les threads des classes Voler et Avancer doivent s'exécuter*/
 	public boolean running = true;
+	/**Hauteur de l'ovale*/
 	public int hauteur;
+	/**Valeur du saut vers le haut*/
 	public int saut;
 	public Affichage affichage;
 	public Parcours parcours;
