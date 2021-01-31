@@ -39,7 +39,9 @@ public class Parcours {
 	/**Constructeur*/
 	public Parcours() {
 		this.pointList = new ArrayList<Point>();
-		this.pointList.add(new Point(this.pointX, this.pointY));
+		this.pointList.add(new Point(0, this.pointY));
+		this.pointList.add(new Point(Affichage.LARGEUR_FENETRE/8, this.pointY));
+		this.pointX = Affichage.LARGEUR_FENETRE/8;
 		this.init_pointList();
 	}
 	

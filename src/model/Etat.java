@@ -47,7 +47,6 @@ public class Etat {
 			/**Si la hauteur dépasse les bornes de la fenêtre, ne rien faire*/
 		}
 		/**On vérifie si la partie est perdue*/
-		this.stopGame();
 	}
 	
 	/**Méthode utilisée pour modifier la hauteur de l'ovale vers le bas en restant dans le cadre de la fenêtre*/
@@ -58,24 +57,23 @@ public class Etat {
 			/**Si la hauteur dépasse les bornes de la fenêtre, ne rien faire*/
 		}
 		/**On vérifie si la partie est perdue*/
-		this.stopGame();
 	}
 	
 	/**Méthode utilisée pour vérifier si l'ovale est sorti de la ligne**/
 	public boolean testPerdu() {
 		Point p1 = this.parcours.getParcours().get(0);
 		Point p2 = this.parcours.getParcours().get(1);
+		/**Ordonnée minimale de l'ovale (ordonnée du point le plus haut de l'ovale dans la fenêtre*/
+		int yMin_ovale = this.getHauteur();
+		/**Ordonnée maximale de l'ovale (ordonnée du point le plus bas de l'ovale dans la fenêtre*/
+		int yMax_ovale = this.getHauteur() + Affichage.HAUTEUR_OVALE;
 		/**Calcul de la pente*/
 		float pente = (p2.y - p1.y) / (float)(p2.x - p1.x);
 		/**Récupération de l'ordonnée du point prochain point invisible sur la fenêtre*/
-		float y = (p1.y - pente * (p1.x));
-		/**Ordonnée minimale de l'ovale (ordonnée du point le plus haut de l'ovale dans la fenêtre*/
-		int yMin_ovale = this.hauteur;
-		/**Ordonnée maximale de l'ovale (ordonnée du point le plus bas de l'ovale dans la fenêtre*/
-		int yMax_ovale = this.hauteur + Affichage.HAUTEUR_OVALE;
+		int y = (int) (p1.y - pente * p1.x);
 		/**Récupération de l'ordonnée du point de la ligne correspondant à la position de l'ovale*/
-		float y_shift = y + (pente * (Affichage.X + Affichage.LARGEUR_OVALE/2));
-		return y_shift <= yMin_ovale || y_shift >= yMax_ovale;
+		int y_shift = (int) (y + (pente * (Affichage.X + Affichage.LARGEUR_OVALE/2)));
+		return y_shift < yMin_ovale || y_shift > yMax_ovale;
 	}
 	
 	/**Méthode utilisée pour stopper le jeu*/

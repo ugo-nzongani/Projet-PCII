@@ -18,8 +18,10 @@ public class Avancer extends Thread {
 			/**Traitement du thread*/
 			this.etat.parcours.incrPosition();
 			this.etat.affichage.repaint();
+			/**On test s'il y a eu collision entre l'ovale et la ligne*/
+			this.etat.stopGame();
 			try {
-				Thread.sleep(80);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}	
